@@ -1,8 +1,8 @@
 <?php
-    #Connect DB
-    include_once("dbConnection/mysqlconfig_connection.php");
-    #Fetch Data in DB
-    include_once("functions/fetch.php");
+    //including th database connection file
+    include_once("../dbConnection/mysqlconfig_connection.php");
+    //including the fetch file
+    include_once("../functions/fetch.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,29 +13,32 @@
 </head>
 <body>
     <h1>My Subjects</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Subject Code</th>
-                <th>Subject Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                while($res = mysqli_fetch_array($result)) {
-                    echo "<tr";
-                    echo "<td>".$res['Subject_ID']."</td>";
-                    echo "<td>".$res['Subject_Code']."</td>";
-                    echo "<td>".$res['Subject_Name']."</td>";
-                    echo "<td><a href=\"forms/editform.php?id=$res[Subject_ID]\">Edit</a> |
-                            <a href=\"functions/delete.php?id=$res[Subject_ID]\"
-                            onClick=\"Return Confirmed('Are you sure you want to delete')\">Delete</a></td>";
-                }
-            ?>
-        </tbody>
+    <a href="../forms/addform.php">Add Subjects</a><br><br>
+    <table width = '100%' border="1" >
+        <tr bgcolor='#CCCCCC'>
+            <td>ID</td>
+            <td>Subject Code</td>
+            <td>Subject Name</td>
+            <td>Syllabus ID</td>
+            <td>Syllabus Code</td>
+            <td>Syllabus Author</td>
+            <td>Action</td>
+        </tr>
+        <?php
+            while($res = mysqli_fetch_assoc($result)){
+                echo "<tr>";
+                echo "<td>". $res['subject_id']."</td>";
+                echo "<td>". $res["subject_code"]."</td>";
+                echo "<td>". $res["subject_name"]."</td>";
+                echo "<td>". $res["syllabus_id"]."</td>";
+                echo "<td>". $res["syllabus_code"]."</td>";
+                echo "<td>". $res["syllabus_author"]."</td>";
+                echo "<td><a href=\"../forms/editform.php?id={$res['subject_id']}\">Edit</a> |
+                        <a href=\"../functions/delete.php?id={$res['subject_id']}\"
+                        onClick=\"return confirm('Are you sure you want to delete?')\">Delete</a></td>";
+
+            }
+        ?>
     </table>
-    
 </body>
 </html>
